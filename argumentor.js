@@ -56,17 +56,96 @@ function get_arguments( word, callback ) {
   );
 }
 
+function get_argument( id, callback ) {
+  
+  if (id === null) {
+    callback([]);
+    return;
+  }
+  
+  let qstring =  
+    "SELECT \
+      * \
+    from \
+      arguments A \
+      inner join arguments_tags AT \
+        on A.id = AT.argument_id \
+      inner join tags T \
+        on T.id = AT.tag_id \
+    where \
+      A.id = ? ;";
+    
+  db.get(
+    qstring,
+    id,
+    function(err, row) {
+      if (typeof row != "undefined") {
+        callback( row );
+      }
+    }
+  );
+}
 
-app.get('/arguments/:word', function(req, res) {
+
+app.get('/v1/arguments/:word', function(req, res) {
   let cb = function ( arr ) {
     res.send( JSON.stringify(arr, null, " ") );
   };
   
   let word = req.params && req.params.word ? req.params.word : null;
   
-  get_arguments(req.params.word, cb);
+  get_arguments( word, cb);
   
 });
+
+app.get('/v1/argument/:id', function(req, res) {
+  let cb = function ( arr ) {
+    res.send( JSON.stringify(arr, null, " ") );
+  };
+  
+  let id = req.params && req.params.id ? req.params.id : null;
+  
+  get_argument( id , cb);
+  
+});
+
+app.post('/v1/argument/:id/edit', function(req, res) {
+  
+  let cb = function ( arr ) {
+    res.send( JSON.stringify(arr, null, " ") );
+  };
+  
+  let id = req.params && req.params.id ? req.params.id : null;
+  
+});
+
+app.post('/v1/argument/add', function(req, res) {
+  
+  let cb = function ( arr ) {
+    res.send( JSON.stringify(arr, null, " ") );
+  };
+  
+});
+
+app.post('/v1/argument/:id/edit', function(req, res) {
+  
+  let cb = function ( arr ) {
+    res.send( JSON.stringify(arr, null, " ") );
+  };
+  
+  let id = req.params && req.params.id ? req.params.id : null;
+  
+});
+
+app.post('/v1/argument/response/add', function(req, res) {
+  
+  let cb = function ( arr ) {
+    res.send( JSON.stringify(arr, null, " ") );
+  };
+  
+});
+
+
 app.listen( port );
 console.log('Listening on port ' + port + '...');
 
