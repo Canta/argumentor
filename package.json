@@ -1,0 +1,18 @@
+{
+  "name": "argumentor",
+  "version": "0.0.1",
+  "main": "argumentor.js",
+  "author": "Canta",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "sqlite3": "*",
+    "express": "*"
+  },
+  "scripts": {
+    "start": "node ./argumentor.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/canta/argumentor.git"
+  }
+}
